@@ -39,3 +39,19 @@ export const loggedInOptions = [
     auth: true,
   },
 ];
+export const categoryNames = [
+  "Cars and vehicles",
+  "Comedy",
+  "Education",
+  "Gaming",
+  "Entertainment",
+  "Film and animation",
+  "How-to and style",
+  "Music",
+  "News and politics",
+  "People and blogs",
+  "Pets and animals",
+  "Science and technology",
+  "Sports",
+  "Travel and events"
+]
