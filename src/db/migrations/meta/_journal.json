@@ -43,6 +43,41 @@
       "when": 1742351469099,
       "tag": "0005_rich_arachne",
       "breakpoints": true
+    },
+    {
+      "idx": 6,
+      "version": "7",
+      "when": 1742629471089,
+      "tag": "0006_lumpy_boomerang",
+      "breakpoints": true
+    },
+    {
+      "idx": 7,
+      "version": "7",
+      "when": 1742637587465,
+      "tag": "0007_late_enchantress",
+      "breakpoints": true
+    },
+    {
+      "idx": 8,
+      "version": "7",
+      "when": 1742638692663,
+      "tag": "0008_outstanding_mastermind",
+      "breakpoints": true
+    },
+    {
+      "idx": 9,
+      "version": "7",
+      "when": 1742639739476,
+      "tag": "0009_reflective_maximus",
+      "breakpoints": true
+    },
+    {
+      "idx": 10,
+      "version": "7",
+      "when": 1742641098898,
+      "tag": "0010_daily_lily_hollister",
+      "breakpoints": true
     }
   ]
 }
