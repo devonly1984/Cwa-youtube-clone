@@ -1,5 +1,6 @@
 "use client"
 import FilterCarousel from '@/components/shared/FilterCarousel';
+import CategoriesSkeleton from '@/components/shared/skeletons/CategorySectionSkeleton';
 import {trpc } from '@/trpc/client'
 import { useRouter } from 'next/navigation';
 import { Suspense } from 'react'
@@ -16,9 +17,7 @@ export const CategorySection = ({categoryId}:CategoriesSectionProps)=>{
     </Suspense>
   );
 }
-const CategoriesSkeleton = ()=>{
-  return <FilterCarousel isLoading data={[]} onSelect={() => {}} />;
-}
+
 const CategorySectionSuspense = ({categoryId}:CategoriesSectionProps) => {
   const [categories] = trpc.categories.getMany.useSuspenseQuery();
   const router =useRouter();

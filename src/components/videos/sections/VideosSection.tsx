@@ -17,15 +17,18 @@ import Link from "next/link";
 import VideoThumbnail from "@/components/videos/VideoThumbnail";
 import { snakeCaseToTitle } from "@/lib/utils";
 import { format } from "date-fns";
+import { Globe2Icon, LockIcon } from "lucide-react";
+import VideosSectionSkeleton from "@/components/shared/skeletons/VideoSectionSkeleton";
  const VideosSection= ()=>{
   return (
-    <Suspense fallback={<p>Loading...</p>}>
+    <Suspense fallback={<VideosSectionSkeleton />}>
       <ErrorBoundary fallback={<p>Error...</p>}>
         <VideosSectionSuspense />
       </ErrorBoundary>
     </Suspense>
   );
  }
+
 const VideosSectionSuspense = () => {
     const [videos,query] = trpc.studio.getMany.useSuspenseInfiniteQuery(
       {
@@ -65,7 +68,7 @@ const VideosSectionSuspense = () => {
                   legacyBehavior
                 >
                   <TableRow className="cursor-pointer">
-                    <TableCell>
+                    <TableCell className="pl-6">
                       <div className="flex items-center gap-4 ">
                         <div className="relative aspect-video w-36 shrink-0 ">
                           <VideoThumbnail
@@ -85,7 +88,16 @@ const VideosSectionSuspense = () => {
                         </div>
                       </div>
                     </TableCell>
-                    <TableCell>{video.visibility}</TableCell>
+                    <TableCell>
+                      <div className="flex items-center">
+                        {video.visibility === "private" ? (
+                          <LockIcon className="size-4 mr-2" />
+                        ) : (
+                          <Globe2Icon className="size-4 mr-2" />
+                        )}
+                        {snakeCaseToTitle(video.visibility)}
+                      </div>
+                    </TableCell>
                     <TableCell>
                       <div className="flex items-center">
                         {snakeCaseToTitle(video.muxStatus || "error")}
@@ -94,9 +106,13 @@ const VideosSectionSuspense = () => {
                     <TableCell className="text-sm truncate">
                       {format(new Date(video.createdAt), "d MMM yyyy")}
                     </TableCell>
-                    <TableCell>Views</TableCell>
-                    <TableCell>Comments</TableCell>
-                    <TableCell>Likes</TableCell>
+                    <TableCell className="text-right text-sm">Views</TableCell>
+                    <TableCell className="text-right text-sm">
+                      Comments
+                    </TableCell>
+                    <TableCell className="text-right text-sm pr-6">
+                      Likes
+                    </TableCell>
                   </TableRow>
                 </Link>
               ))

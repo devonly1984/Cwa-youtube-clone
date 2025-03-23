@@ -1,4 +1,4 @@
-import VideosSection from "../sections/VideosSection";
+import VideosSection from "../../videos/sections/VideosSection";
 
 const StudioView = () => {
   return (

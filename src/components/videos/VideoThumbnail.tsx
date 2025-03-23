@@ -27,6 +27,7 @@ const VideoThumbnail = ({
           alt={title}
           fill
           className="size-full object-cover opacity-0 group-hover:opacity-100"
+          unoptimized={!!previewUrl}
         />
       </div>
       {/**Duration Box */}
