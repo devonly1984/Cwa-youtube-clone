@@ -1,4 +1,11 @@
-import { FlameIcon, HistoryIcon, HomeIcon, ListVideoIcon, PlaySquareIcon, ThumbsUpIcon } from "lucide-react";
+import {
+  FlameIcon,
+  HistoryIcon,
+  HomeIcon,
+  ListVideoIcon,
+  PlaySquareIcon,
+  ThumbsUpIcon,
+} from "lucide-react";
 
 export const alwaysShown = [
   {
@@ -17,7 +24,6 @@ export const alwaysShown = [
     url: "/feed/trending",
     icon: FlameIcon,
   },
-  
 ];
 export const loggedInOptions = [
   {
@@ -53,6 +59,7 @@ export const categoryNames = [
   "Pets and animals",
   "Science and technology",
   "Sports",
-  "Travel and events"
-]
-export const DEFAULT_LIMIT=5
+  "Travel and events",
+];
+export const DEFAULT_LIMIT = 5;
+export const THUMBNAIL_FALLBACK = "/placeholder.svg";

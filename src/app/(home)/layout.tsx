@@ -1,5 +1,5 @@
 
-import HomeLayout from "@/components/home/layout/HomeLayout";
+import {HomeLayout} from "@/components/layouts";
 import { ReactNode } from "react";
 
 const Layout = ({

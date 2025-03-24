@@ -1,5 +1,5 @@
 
-import StudioLayout from "@/components/studio/layout/StudioLayout";
+import {StudioLayout} from "@/components/layouts";
 import { ReactNode } from "react";
 
 const Layout = ({

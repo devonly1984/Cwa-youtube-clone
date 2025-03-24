@@ -1,6 +1,6 @@
 
 
-import HomeView from "@/components/home/views/HomeView";
+import HomeView from "@/components/views/home/HomeView";
 import { HydrateClient, trpc } from "@/trpc/server";
 
 export const dynamic = "force-dynamic";
