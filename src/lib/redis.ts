@@ -1,8 +1,9 @@
 import { Redis } from "@upstash/redis";
 import { Ratelimit } from "@upstash/ratelimit";
+import { config } from "./config";
 const redis = new Redis({
-  url: process.env.UPSTASH_REDIS_REST_URL,
-  token: process.env.UPSTASH_REDIS_REST_TOKEN,
+  url: config.redis.url,
+  token: config.redis.token,
 });
 const ratelimit = new Ratelimit({
     redis,

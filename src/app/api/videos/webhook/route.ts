@@ -11,7 +11,8 @@ import {mux} from '@/lib/mux'
 import { videos } from '@/db/schema';
 import db from '@/db';
 import { UTApi } from 'uploadthing/server';
-const SIGNING_SECRET = process.env.MUX_SIGNING_SECRET;
+import { config } from '@/lib/config';
+const SIGNING_SECRET = config.mux.signingSecret;
 type WebhookEvent =
   | VideoAssetCreatedWebhookEvent
   | VideoAssetReadyWebhookEvent

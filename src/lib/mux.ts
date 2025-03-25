@@ -1,6 +1,7 @@
 import Mux from '@mux/mux-node'
+import { config } from './config';
 
 export const mux = new Mux({
-  tokenId: process.env.MUX_TOKEN_ID,
-  tokenSecret: process.env.MUX_TOKEN_SECRET,
+  tokenId: config.mux.tokenId,
+  tokenSecret: config.mux.tokenSecret,
 });

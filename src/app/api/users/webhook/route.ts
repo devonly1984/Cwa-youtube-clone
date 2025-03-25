@@ -4,9 +4,10 @@ import { WebhookEvent } from '@clerk/nextjs/server'
 import db from '@/db'
 import { users } from '@/db/schema'
 import { eq } from 'drizzle-orm'
+import { config } from '@/lib/config'
 
 export async function POST(req: Request) {
-  const WH_SIGNING_SECRET = process.env.WH_SIGNING_SECRET
+  const WH_SIGNING_SECRET = config.clerk.wehook.signingSecret
 
   if (!WH_SIGNING_SECRET) {
     throw new Error('Error: Please add SIGNING_SECRET from Clerk Dashboard to .env or .env')
