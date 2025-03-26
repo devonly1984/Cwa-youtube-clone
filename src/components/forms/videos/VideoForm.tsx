@@ -1,18 +1,12 @@
 "use client";
 
-import {VideoFormSkeleton} from "@/components/shared/skeletons";
+import {VideoFormSkeleton} from "@/components/skeletons";
 import { Button } from "@/components/ui/button";
 import { trpc } from "@/trpc/client";
 import { Suspense, useState } from "react";
 import { ErrorBoundary } from "react-error-boundary";
 
-import {
-  CopyCheckIcon,
-  CopyIcon,
-  Globe2Icon,
-  LockIcon,
-
-} from "lucide-react";
+import { CopyCheckIcon, CopyIcon, Globe2Icon, LockIcon } from "lucide-react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Input } from "@/components/ui/input";
@@ -38,12 +32,13 @@ import { toast } from "sonner";
 import VideoPlayer from "../../shared/VideoPlayer";
 import Link from "next/link";
 import { snakeCaseToTitle } from "@/lib/utils";
-import { useRouter } from "next/navigation";
+
 import Image from "next/image";
 import { THUMBNAIL_FALLBACK } from "@/constants";
 import ThumbnailUploadModal from "@/components/modals/studio/ThumbnailUploadModal";
 import ThumbnailMenu from "../menus/ThumbnailMenu";
 import SidebarMenu from "../menus/SidebarMenu";
+
 interface VideoFormProps {
   videoId: string;
 }
@@ -57,7 +52,7 @@ const VideoForm = ({ videoId }: VideoFormProps) => {
   );
 };
 const VideoFormSuspense = ({ videoId }: VideoFormProps) => {
-  const router = useRouter();
+
   const [video] = trpc.studio.getOne.useSuspenseQuery({ id: videoId });
   const [categories] = trpc.categories.getMany.useSuspenseQuery();
   const fullUrl = `${process.env.VERCEL_URL || "http://localhost:3000"}/videos/${videoId}`;
@@ -73,27 +68,7 @@ const VideoFormSuspense = ({ videoId }: VideoFormProps) => {
       toast.error("Something went wrong");
     },
   });
-  const remove = trpc.videos.remove.useMutation({
-    onSuccess: () => {
-      utils.studio.getMany.invalidate();
-      toast.success("Video Removed");
-      router.push(`/studio`);
-    },
-    onError: () => {
-      toast.error("Something went wrong");
-    },
-  });
-  const restore = trpc.videos.restore.useMutation({
-    onSuccess: () => {
-      utils.studio.getMany.invalidate();
-      utils.studio.getOne.invalidate({ id: videoId });
-      toast.success("Thumbnail Restored");
-   
-    },
-    onError: () => {
-      toast.error("Something went wrong");
-    },
-  });
+
   const form = useForm<z.infer<typeof videoUpdateSchema>>({
     resolver: zodResolver(videoUpdateSchema),
     defaultValues: video,
@@ -128,7 +103,7 @@ const VideoFormSuspense = ({ videoId }: VideoFormProps) => {
               </p>
             </div>
             <div className="flex items-center gap-x-2">
-              <SidebarMenu update={update} remove={remove} videoId={videoId}/>
+              <SidebarMenu videoId={videoId} />
             </div>
           </div>
           <div className="grid grid-cols-1 lg:grid-cols-5 gap-6">
@@ -186,7 +161,6 @@ const VideoFormSuspense = ({ videoId }: VideoFormProps) => {
                         <ThumbnailMenu
                           videoId={videoId}
                           setThumbnailModalOpen={setThumbnailModalOpen}
-                          restore={restore}
                         />
                       </div>
                     </FormControl>

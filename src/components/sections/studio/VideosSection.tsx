@@ -18,7 +18,7 @@ import VideoThumbnail from "@/components/shared/VideoThumbnail";
 import { snakeCaseToTitle } from "@/lib/utils";
 import { format } from "date-fns";
 import { Globe2Icon, LockIcon } from "lucide-react";
-import VideosSectionSkeleton from "@/components/shared/skeletons/VideoSectionSkeleton";
+import VideosSectionSkeleton from "@/components/skeletons/VideoSectionSkeleton";
  const VideosSection= ()=>{
   return (
     <Suspense fallback={<VideosSectionSkeleton />}>

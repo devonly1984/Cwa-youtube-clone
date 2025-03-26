@@ -1,5 +1,5 @@
 "use client"
-import UserAvatar from "@/components/shared/UserAvatar"
+import UserAvatar from "@/components/sections/users/UserAvatar"
 import { SidebarHeader, SidebarMenuButton, SidebarMenuItem, useSidebar } from "@/components/ui/sidebar"
 import { Skeleton } from "@/components/ui/skeleton"
 import { useUser } from "@clerk/nextjs"

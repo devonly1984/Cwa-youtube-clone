@@ -32,7 +32,7 @@ export const config = {
       currentSigning: process.env.QSTASH_CURRENT_SIGNING_KEY,
       nextSigning: process.env.QSTASH_NEXT_SIGNING_KEY
     }
-  
+    
   },
   vercel: {
     url: process.env.VERCEL_URL

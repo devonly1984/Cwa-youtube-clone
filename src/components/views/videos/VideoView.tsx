@@ -1,14 +1,21 @@
-import VideoForm from "@/components/forms/videos/VideoForm";
+import VideoViewsSection from "@/components/sections/videos/VideoViewsSection";
+import SuggestionSection from "@/components/subsections/videos/SuggestionSection";
 
-interface VideoViewProps {
+interface VideosViewProps {
     videoId:string;
 }
-const VideoView = ({ videoId }: VideoViewProps) => {
+const VideoView = ({videoId}:VideosViewProps) => {
   return (
-    <div className="px-4 max-w-screen-lg pt-2.5">
-      <VideoForm videoId={videoId} />
+    <div className="flex flex-col max-w-[1700px] mx-auto px-4 pt-2.5 mb-10">
+      <div className="flex flex-col xl:flex-row gap-6">
+        <div className="flex-1 min-w-0">
+          <VideoViewsSection videoId={videoId} />
+          <div className="xl:hidden block mt-4">
+            <SuggestionSection />
+          </div>
+        </div>
+      </div>
     </div>
   );
 }
-
 export default VideoView

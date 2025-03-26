@@ -1,21 +1,9 @@
 "use client"
-import { cva,type VariantProps } from 'class-variance-authority'
+import { type VariantProps } from "class-variance-authority";
 import { cn } from "@/lib/utils";
 import {Avatar,AvatarImage} from '@/components/ui/avatar'
-const avatarVariants = cva("", {
-    variants: {
-      size: {
-        default: "h-9 w-9",
-        xs: "h-4 w-4",
-        sm: "h-6 w-6",
-        lg: "h-10 w-10",
-        xl: "h-[160px] w-[160px]",
-      },
-    },
-    defaultVariants: {
-      size: "default",
-    },
-  });
+import { avatarVariants } from '@/constants';
+
 interface UserAvatarProps extends VariantProps<typeof avatarVariants> {
     imageUrl: string;
     name: string;

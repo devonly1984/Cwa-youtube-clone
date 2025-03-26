@@ -6,4 +6,4 @@ export {default as CategorySection} from '@/components/sections/home/CategorySec
 //Studio
 
 //Videos
-export {default as VideosSection} from '@/components/sections/videos/VideosSection'
+export {default as VideosSection} from '@/components/sections/studio/VideosSection'

@@ -1,6 +1,12 @@
-"use client"
-import { Button } from "@/components/ui/button"
-import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu"
+"use client";
+import { Button } from "@/components/ui/button";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
+import { trpc } from "@/trpc/client";
 import {
   ImagePlusIcon,
   MoreVerticalIcon,
@@ -8,16 +14,27 @@ import {
   Sparkles,
 } from "lucide-react";
 import { Dispatch, SetStateAction } from "react";
+import { toast } from "sonner";
 interface ThumbnailMenuProps {
   setThumbnailModalOpen: Dispatch<SetStateAction<boolean>>;
-  restore:any;
-  videoId:string;
+  videoId: string;
 }
+
 const ThumbnailMenu = ({
-    videoId,
-  restore,
+  videoId,
   setThumbnailModalOpen,
 }: ThumbnailMenuProps) => {
+  const utils = trpc.useUtils();
+  const restore = trpc.videos.restore.useMutation({
+    onSuccess: () => {
+      utils.studio.getMany.invalidate();
+      utils.studio.getOne.invalidate({ id: videoId });
+      toast.success("Thumbnail Restored");
+    },
+    onError: () => {
+      toast.error("Something went wrong");
+    },
+  });
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
@@ -46,4 +63,4 @@ const ThumbnailMenu = ({
     </DropdownMenu>
   );
 };
-export default ThumbnailMenu
+export default ThumbnailMenu;

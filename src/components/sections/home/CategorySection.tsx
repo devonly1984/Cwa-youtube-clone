@@ -1,6 +1,6 @@
 "use client"
 import FilterCarousel from '@/components/shared/FilterCarousel';
-import {CategoriesSkeleton} from '@/components/shared/skeletons'
+import {CategoriesSkeleton} from '@/components/skeletons'
 import {trpc } from '@/trpc/client'
 import { useRouter } from 'next/navigation';
 import { Suspense } from 'react'

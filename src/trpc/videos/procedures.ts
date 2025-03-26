@@ -1,13 +1,40 @@
 import db from "@/db";
-import { videos, videoUpdateSchema } from "@/db/schema";
+import { users, videos, videoUpdateSchema } from "@/db/schema";
 import { mux } from "@/lib/mux";
-import { createTRPCRouter, protectedProcedure } from "@/trpc/init";
+import { qstashClient } from "@/lib/qstash";
+import { baseProcedure, createTRPCRouter, protectedProcedure } from "@/trpc/init";
 import { TRPCError } from "@trpc/server";
-import { and, eq } from "drizzle-orm";
+import { and, eq, getTableColumns } from "drizzle-orm";
 import { UTApi } from "uploadthing/server";
 
 import {z} from 'zod';
 export const videosRouter = createTRPCRouter({
+  getOne: baseProcedure.input(z.object({ id: z.string().uuid() })).query(async({input})=>{
+    const [existingVideo] = await db
+      .select({
+        ...getTableColumns(videos),
+        user: {
+          ...getTableColumns(users),
+        },
+      })
+      .from(videos)
+      .innerJoin(users, eq(videos.userId, users.id))
+      .where(eq(videos.id, input.id));
+      
+      if (!existingVideo) {
+        throw new TRPCError({ code: "NOT_FOUND" });
+      }
+      return existingVideo;
+  }),
+  generateThumbnail: protectedProcedure.mutation(async ({ ctx }) => {
+    const { id: userId } = ctx.user;
+    const { workflowRunId } = await qstashClient.trigger({
+      url: `${process.env.UPSTASH_WORKFLOW_URL}/api/videos/workflow/title`,
+      body: { userId },
+      workflowRunId: "test-wrokflow",
+    });
+    return workflowRunId;
+  }),
   restore: protectedProcedure
     .input(z.object({ id: z.string().uuid() }))
     .mutation(async ({ ctx, input }) => {
@@ -37,10 +64,11 @@ export const videosRouter = createTRPCRouter({
       const utapi = new UTApi();
       const uploadedThumbnail =
         await utapi.uploadFilesFromUrl(tempThumbnailUrl);
-if (!uploadedThumbnail.data) {
-  throw new TRPCError({code: 'INTERNAL_SERVER_ERROR'});
-}
-const { key: thumbnailKey, ufsUrl: thumbnailUrl } = uploadedThumbnail.data;
+      if (!uploadedThumbnail.data) {
+        throw new TRPCError({ code: "INTERNAL_SERVER_ERROR" });
+      }
+      const { key: thumbnailKey, ufsUrl: thumbnailUrl } =
+        uploadedThumbnail.data;
       const [updatedVideo] = await db
         .update(videos)
         .set({ thumbnailUrl, thumbnailKey })

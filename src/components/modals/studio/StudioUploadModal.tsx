@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button";
 import { trpc } from "@/trpc/client";
 import { Loader2Icon, PlusIcon } from "lucide-react";
 import { toast } from "sonner";
-import StudioUploader from "@/components/shared/StudioUploader"
+import StudioUploader from "@/components/modals/studio/StudioUploader"
 import { useRouter } from "next/navigation";
 
 const StudioUploadModal = () => {
