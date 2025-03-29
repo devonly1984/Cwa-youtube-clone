@@ -5,10 +5,13 @@ import { trpc } from "@/trpc/client";
 import { Suspense } from "react";
 import { ErrorBoundary } from "react-error-boundary";
 import CommentItem from "./CommentItem";
+import { DEFAULT_LIMIT } from "@/constants";
+import InfiniteScroll from "@/components/shared/InfiniteScroll";
+import CommentsSectionSkeleton from "@/components/skeletons/CommentsSectionSkeleton";
 
 const CommentsSection = ({ videoId }: CommentsSectionProps) => {
   return (
-    <Suspense fallback={<>Loading...</>}>
+    <Suspense fallback={<CommentsSectionSkeleton />}>
       <ErrorBoundary fallback={<p>Error</p>}>
         <CommentsSectionSuspense videoId={videoId} />
       </ErrorBoundary>
@@ -19,17 +22,35 @@ interface CommentsSectionProps {
   videoId:string;
 }
 const CommentsSectionSuspense = ({ videoId }: CommentsSectionProps) => {
-  const [comments] = trpc.comments.getMany.useSuspenseQuery({ videoId });
+  const [comments,query] = trpc.comments.getMany.useSuspenseInfiniteQuery(
+    {
+      videoId,
+      limit: DEFAULT_LIMIT,
+    },
+    {
+      getNextPageParam: (lastPage) => lastPage.nextCursor,
+    }
+  );
 
   return (
     <div className="mt-6">
       <div className="flex flex-col gap-6">
-        <h1>0 Comments</h1>
+        <h1 className="font-bold text-xl">
+          {comments.pages[0].totalCount} Comments
+        </h1>
         <CommentForm videoId={videoId} />
         <div className="flex flex-col gap-4 mt-2">
-          {comments.map((comment) => (
-            <CommentItem key={comment.id} comment={comment} />
-          ))}
+          {comments.pages
+            .flatMap((page) => page.items)
+            .map((comment) => (
+              <CommentItem key={comment.id} comment={comment} />
+            ))}
+          <InfiniteScroll
+            isManual
+            hasNextPage={query.hasNextPage}
+            isFetchingNextPage={query.isFetchingNextPage}
+            fetchNextPage={query.fetchNextPage}
+          />
         </div>
       </div>
     </div>
