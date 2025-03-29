@@ -12,16 +12,16 @@ interface VideoTopRowProps {
   video: VideoGetOneOutput;
 }
 const VideoTopRow = ({ video }: VideoTopRowProps) => {
-const compactViews = useMemo(()=>{
+const compactViews = useMemo(() => {
   return Intl.NumberFormat("en", {
     notation: "compact",
-  }).format(1000);
-},[])
+  }).format(video.videoCount);
+}, [video.videoCount]);
 const expandedViews = useMemo(()=>{
   return Intl.NumberFormat("en", {
     notation: "standard",
-  }).format(1000);
-},[])
+  }).format(video.videoCount);
+},[video.videoCount])
 
 const compactDate = useMemo(() => {
  return formatDistanceToNow(video.createdAt, { addSuffix: true });
