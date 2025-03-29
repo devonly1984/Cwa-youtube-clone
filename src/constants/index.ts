@@ -7,7 +7,9 @@ import {
   PlaySquareIcon,
   ThumbsUpIcon,
 } from "lucide-react";
-
+export const DEFAULT_LIMIT = 5;
+export const THUMBNAIL_FALLBACK = "/placeholder.svg";
+export const USER_FALLBACK  = '/user-placeholder.svg'
 export const alwaysShown = [
   {
     title: "Home",
@@ -62,8 +64,7 @@ export const categoryNames = [
   "Sports",
   "Travel and events",
 ];
-export const DEFAULT_LIMIT = 5;
-export const THUMBNAIL_FALLBACK = "/placeholder.svg";
+
 export const avatarVariants = cva("", {
   variants: {
     size: {

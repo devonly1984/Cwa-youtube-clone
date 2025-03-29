@@ -7,15 +7,16 @@ import { ErrorBoundary } from "react-error-boundary"
 import VideoBanner from "./VideoBanner"
 import VideoTopRow from "./VideoTopRow"
 import { useAuth } from "@clerk/nextjs"
+import VideoViewsSkeleton from "@/components/skeletons/VideoViewsSkeleton"
 
 interface VideoViewsSectionProps {
     videoId:string
 }
 const VideoViewsSection = ({videoId}:VideoViewsSectionProps) => {
   return (
-    <Suspense fallback={<p>Loading...</p>}>
+    <Suspense fallback={<VideoViewsSkeleton />}>
       <ErrorBoundary fallback={<p>Error</p>}>
-        <VideoViewsSuspense videoId={videoId}/>
+        <VideoViewsSuspense videoId={videoId} />
       </ErrorBoundary>
     </Suspense>
   );

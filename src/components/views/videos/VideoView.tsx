@@ -1,6 +1,6 @@
 import VideoViewsSection from "@/components/sections/videos/VideoViewsSection";
-import CommentsSection from "@/components/subsections/videos/CommentsSection";
-import SuggestionSection from "@/components/subsections/videos/SuggestionSection";
+import CommentsSection from "@/components/subsections/subscriptions/CommentsSection";
+import SuggestionSection from "@/components/subsections/subscriptions/SuggestionSection";
 
 interface VideosViewProps {
     videoId:string;
@@ -14,7 +14,7 @@ const VideoView = ({videoId}:VideosViewProps) => {
           <div className="xl:hidden block mt-4">
             <SuggestionSection />
           </div>
-          <CommentsSection />
+          <CommentsSection videoId={videoId} />
         </div>
         <div className="hidden xl:block w-full xl:w-[380px] 2xl:w-[460px] shrink-1">
           <SuggestionSection />
