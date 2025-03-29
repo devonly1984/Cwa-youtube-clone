@@ -1,6 +1,7 @@
+import CommentDropDown from "@/components/menus/comments/CommentDropDown";
 import UserAvatar from "@/components/sections/users/UserAvatar";
 import { CommentsGetManyOutput } from "@/types";
-import { useAuth } from "@clerk/nextjs";
+
 import { formatDistanceToNow } from "date-fns";
 import Link from "next/link";
 
@@ -8,7 +9,7 @@ interface CommentItemProps {
   comment: CommentsGetManyOutput["items"][number];
 }
 const CommentItem = ({comment}:CommentItemProps) => {
-  const {userId} = useAuth();
+
   return (
     <div>
       <div className="flex gap-4">
@@ -33,8 +34,8 @@ const CommentItem = ({comment}:CommentItemProps) => {
           <p className="text-sm">{comment.value}</p>
           {/**TODO: REACTIONS */}
         </div>
-
-      </div>
+      <CommentDropDown comment={comment}/>
+      </div >
     </div>
   );
 }
